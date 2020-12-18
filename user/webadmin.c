@@ -50,8 +50,7 @@ static ETSTimer ff;
 
 
 static ICACHE_FLASH_ATTR
-void light1_set(Request *req, char *body, uint32_t body_length, 
-        uint32_t more) {
+void light1_set(Request *req, char *body, uint32_t length, uint32_t more) {
    uint32_t density = atoi(body);
    light_density(LIGHT1, density);
    httpresponse_text(req, HTTPSTATUS_OK, NULL, NULL);

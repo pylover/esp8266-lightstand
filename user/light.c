@@ -10,8 +10,8 @@
 
 ICACHE_FLASH_ATTR
 void light_density(uint8_t c, uint32_t v) {
-    DEBUG("Duty: %d\n", v);
-    pwm_set_duty(v , c);
+    uint32_t duty = v * MAXDUTY / 100;
+    pwm_set_duty(duty, c);
     pwm_start();
 }
 

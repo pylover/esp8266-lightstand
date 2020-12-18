@@ -15,20 +15,19 @@
 
 
 // LED
-#define LED_MUX         PERIPHS_IO_MUX_GPIO2_U
-#define LED_NUM         2
-#define LED_FUNC        FUNC_GPIO2
+#define LED_MUX                PERIPHS_IO_MUX_GPIO0_U     
+#define LED_NUM                0
+#define LED_FUNC               FUNC_GPIO0
 
+#define LIGHT1                 0
+#define LIGHT1_MUX             PERIPHS_IO_MUX_MTDO_U
+#define LIGHT1_NUM		       2
+#define LIGHT1_FUNC		       FUNC_GPIO2
 
-#define LIGHT1          0
-#define LIGHT1_MUX      PERIPHS_IO_MUX_MTDO_U
-#define LIGHT1_NUM		15
-#define LIGHT1_FUNC		FUNC_GPIO15
-
-#define LIGHT2           1
-#define LIGHT2_MUX       PERIPHS_IO_MUX_MTDI_U
-#define LIGHT2_NUM		 12
-#define LIGHT2_FUNC		 FUNC_GPIO12
+#define LIGHT2                 1
+#define LIGHT2_MUX             PERIPHS_IO_MUX_U0RXD_U
+#define LIGHT2_NUM		       3
+#define LIGHT2_FUNC		       FUNC_GPIO3
 
 //#define LIGHT3           2
 //#define LIGHT3_MUX       PERIPHS_IO_MUX_MTCK_U
