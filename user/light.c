@@ -7,6 +7,14 @@
 #include <pwm.h>
 
 
+ICACHE_FLASH_ATTR
+void light_density_all(uint32_t v) {
+    uint32_t duty = v * MAXDUTY / 100;
+    pwm_set_duty(duty, LIGHT1);
+    pwm_set_duty(duty, LIGHT2);
+    pwm_start();
+}
+
 
 ICACHE_FLASH_ATTR
 void light_density(uint8_t c, uint32_t v) {

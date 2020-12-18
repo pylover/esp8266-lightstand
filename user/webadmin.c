@@ -48,6 +48,13 @@ static ETSTimer ff;
 
 #define RB_BUFFSIZE       (2048 * 3)
 
+static ICACHE_FLASH_ATTR
+void all_set(Request *req, char *body, uint32_t length, uint32_t more) {
+   uint32_t density = atoi(body);
+   light_density_all(density);
+   httpresponse_text(req, HTTPSTATUS_OK, NULL, NULL);
+}
+
 
 static ICACHE_FLASH_ATTR
 void light1_set(Request *req, char *body, uint32_t length, uint32_t more) {
@@ -115,6 +122,7 @@ void webadmin_index(Request *req, char *body, uint32_t body_length,
 
 
 static HttpRoute routes[] = {
+    {"SET",       "/",            all_set            },
     {"SET",       "/1",           light1_set         },
     {"SET",       "/2",           light2_set         },
     {"FOTA",      "/",            fota_reboot        },
