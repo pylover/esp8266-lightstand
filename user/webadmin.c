@@ -122,9 +122,9 @@ void webadmin_index(Request *req, char *body, uint32_t body_length,
 
 
 static HttpRoute routes[] = {
-    {"SET",       "/",            all_set            },
     {"SET",       "/1",           light1_set         },
     {"SET",       "/2",           light2_set         },
+    {"SET",       "/",            all_set            },
     {"FOTA",      "/",            fota_reboot        },
     {"OPTIONS",   "/",            webadmin_options   },
     {"GET",       "/",            webadmin_index     },

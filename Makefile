@@ -14,7 +14,8 @@
 
 # Edit this variables before using the make file
 SPI_SIZE_MAP := 2
-HOST := 192.168.8.132
+#HOST := 192.168.8.132
+HOST := 192.168.8.140
 BAUDRATE = 115200
 #FLASHBAUDRATE = 230401
 FLASHBAUDRATE = 460800
