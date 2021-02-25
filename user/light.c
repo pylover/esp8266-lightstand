@@ -12,6 +12,7 @@ void light_density_all(uint32_t v) {
     uint32_t duty = v * MAXDUTY / 100;
     pwm_set_duty(duty, LIGHT1);
     pwm_set_duty(duty, LIGHT2);
+    //pwm_set_duty(duty, LIGHT3);
     pwm_start();
 }
 
@@ -37,6 +38,7 @@ void light_init() {
     };
  
     uint32 pwmdutyinit[PWM_CHANNELS] = {
+        LIGHT_INIT_DENSITY, 
         LIGHT_INIT_DENSITY, 
         LIGHT_INIT_DENSITY, 
     };

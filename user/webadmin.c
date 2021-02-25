@@ -53,27 +53,36 @@ static Params *params;
 static ICACHE_FLASH_ATTR
 void all_set(struct httpd_request *req, char *body, uint32_t length, 
         uint32_t more) {
-   uint32_t density = atoi(body);
-   light_density_all(density);
-   httpd_response_text(req, HTTPSTATUS_OK, NULL, 0);
+    if (more) {
+        return;
+    }
+    uint32_t density = atoi(body);
+    light_density_all(density);
+    httpd_response_text(req, HTTPSTATUS_OK, "done", 4);
 }
 
 
 static ICACHE_FLASH_ATTR
 void light1_set(struct httpd_request *req, char *body, uint32_t length, 
         uint32_t more) {
-   uint32_t density = atoi(body);
-   light_density(LIGHT1, density);
-   httpd_response_text(req, HTTPSTATUS_OK, NULL, 0);
+    if (more) {
+        return;
+    }
+    uint32_t density = atoi(body);
+    light_density(LIGHT1, density);
+    httpd_response_text(req, HTTPSTATUS_OK, "done", 4);
 }
 
 
 static ICACHE_FLASH_ATTR
 void light2_set(struct httpd_request *req, char *body, uint32_t body_length, 
         uint32_t more) {
-   uint32_t density = atoi(body);
-   light_density(LIGHT2, density);
-   httpd_response_text(req, HTTPSTATUS_OK, NULL, 0);
+    if (more) {
+        return;
+    }
+    uint32_t density = atoi(body);
+    light_density(LIGHT2, density);
+    httpd_response_text(req, HTTPSTATUS_OK, "done", 4);
 }
 
 

@@ -11,7 +11,8 @@
 #     a generated lib/image xxx.a ()
 #
 
-HOST ?= h.lightstand
+HOST ?= h.lightstand1
+#HOST ?= home.nodemcu
 COMPILE ?= gcc
 
 SPI_SIZE_MAP := 6
@@ -315,7 +316,7 @@ fotamap6: map6user2 rebootfota
 
 .PHONY: fotamap2
 fotamap2: map2user2 rebootfota
-	@sleep 5
+	@sleep 3
 	-curl -F firmware=@"$(BINDIR)/upgrade/user2.1024.new.2.bin" \
 		`uns resolve --short $(HOST)`/firmware
 	-echo
