@@ -5,10 +5,10 @@
 
 #include <c_types.h>
 
-// LED
-#define LED_MUX		        PERIPHS_IO_MUX_GPIO2_U	
-#define LED_NUM			    2
-#define LED_FUNC		    FUNC_GPIO2
+//// LED
+//#define LED_MUX		        PERIPHS_IO_MUX_GPIO2_U	
+//#define LED_NUM			    2
+//#define LED_FUNC		    FUNC_GPIO2
 
 #define ON	true
 #define OFF false

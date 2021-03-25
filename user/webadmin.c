@@ -35,6 +35,41 @@ static char buff[WEBADMIN_BUFFSIZE];
 static size16_t bufflen;
 
 
+static ICACHE_FLASH_ATTR
+httpd_err_t light_set(struct httpd_session *s) {
+    size32_t more = HTTPD_REQUESTBODY_REMAINING(s);
+    char *id = rindex(s->request.path, '/') + 1;
+    char body[16];
+    if (more) {
+        return HTTPD_MORE;
+    }
+    HTTPD_RECV(s, body, 16);
+    uint32_t density = atoi(body);
+    uint8_t ch = atoi(id);
+    if (ch) {
+        light_density(ch - 1, density);
+    }
+    else {
+        light_density_all(density);
+    }
+    return HTTPD_RESPONSE_TEXT(s, HTTPSTATUS_OK, NULL, 0);
+}
+
+#define LIGHTS_JSON "{" \
+  "\"l1\": %u," \
+  "\"l2\": %u" \
+"}"
+
+
+static ICACHE_FLASH_ATTR
+httpd_err_t lights_json(struct httpd_session *s) {
+    uint8_t l1 = light_density_get(LIGHT1);
+    uint8_t l2 = light_density_get(LIGHT2);
+    bufflen = os_sprintf(buff, LIGHTS_JSON,  l1, l2);
+    return HTTPD_RESPONSE_JSON(s, HTTPSTATUS_OK, buff, bufflen);
+}
+
+
 struct fileserve {
     uint32_t remain;
     uint32_t addr;
@@ -511,23 +546,12 @@ httpd_err_t webadmin_sysinfo(struct httpd_session *s) {
 }
 
 
-#include "webtest.c"
-
 static struct httpd_route routes[] = {
-
+    {"SET",        "/",                   light_set               },
+    {"GET",        "/lights",             lights_json             },
 
     /* Upgrade firmware over the air (wifi) */
     {"UPGRADE",    "/firmware",           webadmin_fw_upgrade     },
-
-    /* Under test, needed by webtest.sg &| make test */
-    {"DOWNLOAD",   "/demo/multipartstreams", demo_download_stream   },
-    {"UPLOAD",     "/demo/multipartstreams", demo_multipart_stream  },
-    {"ECHO",       "/demo/multipartforms",   demo_multipart         },
-    {"ECHO",       "/demo/urlencodedforms",  demo_urlencoded        },
-    {"ECHO",       "/demo/queries",          demo_querystring       },
-    {"ECHO",       "/demo/headers",          demo_headersecho       },
-    {"DOWNLOAD",   "/demo",                  demo_download          },
-    {"GET",        "/demo",                  demo_index             },
 
     /* Feel free to change these handlers */
     {"DISCOVER",   "/uns",                webadmin_uns_discover   },

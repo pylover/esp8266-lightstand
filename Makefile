@@ -11,7 +11,7 @@
 #     a generated lib/image xxx.a ()
 #
 
-HOST ?= dev.node
+HOST ?= h.ls1
 COMPILE ?= gcc
 
 SPI_SIZE_MAP := 6
@@ -91,16 +91,16 @@ LINKFLAGS_eagle.app.v6 = \
 	-lwpa	\
 	-lcrypto	\
 	-lmain	\
-	-lupgrade\
+	-lupgrade \
 	-ldriver \
-	-lhal					\
-	$(DEP_LIBS_eagle.app.v6)					\
+	-lhal \
+	-lpwm	\
+	$(DEP_LIBS_eagle.app.v6) \
 	-Wl,--end-group
 
 #	-ljson	\
 #	-lsmartconfig \
 #	-lmbedtls	\
-#	-lpwm	\
 	
 DEPENDS_eagle.app.v6 = \
                 $(LD_FILE) \
@@ -201,7 +201,7 @@ webui:
 	
 .PHONY: upload-webui
 upload-webui: webui
-	-uns http post dev.node :$(INDEXHTML_DEFLATE)
+	-uns http post $(HOST) :$(INDEXHTML_DEFLATE)
 
 ##################
 # SPI MAP 2 common

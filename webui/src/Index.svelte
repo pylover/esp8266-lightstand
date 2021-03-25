@@ -5,6 +5,33 @@ import Button from './Button.svelte';
 
 let loading = true;
 let p = {};
+let lights = {
+  l1: 50,
+  l2: 50 
+};
+
+let disabled = true;
+
+async function saveLights(event) {
+  var id = event.srcElement.id;
+  var v = event.srcElement.value;
+  const res = await fetch(`/${id}`, {
+    method: 'SET',
+    body: v
+  });
+}
+
+async function loadLights() {
+  disabled = true;
+  const res = await fetch(`/lights.json`);
+  if (res.ok) {
+    lights = await res.json();
+    disabled = false;
+  }
+  else {
+    throw new Error(res.text());
+  }
+}
 
 onMount(async () => {
   const res = await fetch(`/status.json`);
@@ -16,6 +43,7 @@ onMount(async () => {
   else {
     throw new Error(res.text());
   }
+  await loadLights();
 });
 
 
@@ -41,7 +69,7 @@ const sysinfo = [
 
 <style type="text/sass">
 @import 'styles/variables.sass'
-#index > .row
+#index > .sysinfo.row
   min-height: $nav-icon-size
   > div:first-child
     padding-right: $gutter * 2
@@ -53,9 +81,35 @@ const sysinfo = [
 </style>
 
 <div id="index">
+  <Section title="Lights" icon="brightness-contrast" />
+  <div class="row all10">
+    <div class="all10">Light 1</div>
+    <div class="all10">
+      <input bind:value={lights.l1}
+             on:change={saveLights}
+             id="1"
+             type="range" 
+             min="0"
+             max="100"
+             {disabled} />
+    </div>
+  </div>
+  <div class="row all10">
+    <div class="all10">Light 2</div>
+    <div class="all10">
+      <input bind:value={lights.l2}
+             on:change={saveLights}
+             id="2"
+             type="range" 
+             min="0"
+             max="100"
+             {disabled} />
+    </div>
+  </div>
+
   <Section title="System Status" icon="stats-dots" />
   {#each sysinfo as n, i}
-    <div class="all10 row">
+    <div class="all10 row sysinfo">
       <div class="xg2 lg3 md4 sm5">{n.title}:</div>
       <div class="xg8 lg7 md6 sm5">{p[n.value]}</div>
     </div>

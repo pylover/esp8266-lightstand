@@ -7,6 +7,7 @@
 #include "status.h"
 #include "uns.h"
 #include "interrupt.h"
+#include "light.h"
 
 // SDK
 #include <ets_sys.h>
@@ -114,7 +115,9 @@ void user_init(void) {
 
     /* Disable wifi led before infrared */
     wifi_status_led_uninstall();
-
+    
+    /* Init light */
+    light_init();
     status_update(100, 400, 5, boothello);
 }
 
